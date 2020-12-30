@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.study.trade.balance.mapper.TradeLogDataMapper">
+  <resultMap id="BaseResultMap" type="org.study.trade.balance.data.TradeLogData">
+    <id column="log_id" jdbcType="INTEGER" property="logId" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="from_account" jdbcType="INTEGER" property="fromAccount" />
+    <result column="to_account" jdbcType="INTEGER" property="toAccount" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    log_id, amount, from_account, to_account, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from trade_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from trade_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.study.trade.balance.data.TradeLogData">
+    <selectKey keyProperty="logId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into trade_log (amount, from_account, to_account, 
+      update_time)
+    values (#{amount,jdbcType=DECIMAL}, #{fromAccount,jdbcType=INTEGER}, #{toAccount,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.study.trade.balance.data.TradeLogData">
+    <selectKey keyProperty="logId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into trade_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="fromAccount != null">
+        from_account,
+      </if>
+      <if test="toAccount != null">
+        to_account,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="fromAccount != null">
+        #{fromAccount,jdbcType=INTEGER},
+      </if>
+      <if test="toAccount != null">
+        #{toAccount,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.study.trade.balance.data.TradeLogData">
+    update trade_log
+    <set>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="fromAccount != null">
+        from_account = #{fromAccount,jdbcType=INTEGER},
+      </if>
+      <if test="toAccount != null">
+        to_account = #{toAccount,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.study.trade.balance.data.TradeLogData">
+    update trade_log
+    set amount = #{amount,jdbcType=DECIMAL},
+      from_account = #{fromAccount,jdbcType=INTEGER},
+      to_account = #{toAccount,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+</mapper>

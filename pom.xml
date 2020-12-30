@@ -13,6 +13,7 @@
         <module>trade-commodity</module>
         <module>trade-cart</module>
         <module>trade-stock</module>
+        <module>trade-balance</module>
     </modules>
 
     <name>cloud-trade</name>
@@ -58,7 +59,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.8</version>
+                <version>1.18.14</version>
             </dependency>
 
             <dependency>
