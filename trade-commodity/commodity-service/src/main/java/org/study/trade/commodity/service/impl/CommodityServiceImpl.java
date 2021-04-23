@@ -5,7 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.study.trade.commodity.data.CommodityData;
+import org.study.trade.commodity.mapper.data.CommodityData;
 import org.study.trade.commodity.mapper.CommodityDataMapper;
 
 import java.util.Collections;
@@ -22,14 +22,14 @@ public class CommodityServiceImpl {
     @Autowired
     private CommodityDataMapper commodityMapper;
 
-    public List<CommodityData> batchSelectByKey(final List<Integer> keys) {
+    public List<CommodityData> batchSelectByKey(final List<Long> keys) {
         if (CollectionUtils.isEmpty(keys)) {
             return Collections.emptyList();
         }
         return commodityMapper.batchByPrimaryKey(keys);
     }
 
-    public Optional<CommodityData> selectByKeyAndVersion(Integer id, Long version) {
+    public Optional<CommodityData> selectByKeyAndVersion(Long id, Long version) {
         if (id == null || version == null) {
             return Optional.empty();
         }

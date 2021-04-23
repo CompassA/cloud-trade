@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.study.trade.commodity.data.CommodityData;
+import org.study.trade.commodity.mapper.data.CommodityData;
 import org.study.trade.commodity.mapper.CommodityDataMapper;
 
 /**
@@ -18,7 +18,7 @@ public class CommodityController {
     private CommodityDataMapper commodityMapper;
 
     @GetMapping("/trade/api/commodity")
-    public CommodityData getCommodityById(@RequestParam("id") int id) {
+    public CommodityData getCommodityById(@RequestParam("id") Long id) {
         return commodityMapper.selectByPrimaryKey(id);
     }
 

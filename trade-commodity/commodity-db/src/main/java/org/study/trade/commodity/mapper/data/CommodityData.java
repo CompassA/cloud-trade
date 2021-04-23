@@ -1,4 +1,4 @@
-package org.study.trade.commodity.data;
+package org.study.trade.commodity.mapper.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,9 +15,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommodityData {
-    private Integer id;
+    private Long id;
 
-    private Integer shopId;
+    private Long shopId;
 
     private String name;
 

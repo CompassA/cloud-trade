@@ -23,7 +23,7 @@
         </javaTypeResolver>
 
         <!--生成DataObject类存放位置-->
-        <javaModelGenerator targetPackage="org.study.trade.commodity.data"
+        <javaModelGenerator targetPackage="org.study.trade.commodity.mapper.data"
                             targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>

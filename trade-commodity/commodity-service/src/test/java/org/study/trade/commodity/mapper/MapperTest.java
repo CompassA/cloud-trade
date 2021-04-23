@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.study.trade.commodity.data.CommodityData;
+import org.study.trade.commodity.mapper.data.CommodityData;
 import org.study.trade.commodity.service.impl.CommodityServiceImpl;
 
 import java.math.BigDecimal;
@@ -31,23 +31,15 @@ public class MapperTest {
     private CommodityServiceImpl commodityService;
 
     @Test
-    public void commodityMapperTest() {
-        CommodityData result = commodityPOMapper.selectByPrimaryKey(1);
-        Assert.assertEquals(result.getName(), "test");
-    }
-
-    @Test
     public void insertTest() {
         CommodityData mock = new CommodityData();
         mock.setName("测试商品");
-        mock.setShopId(1);
+        mock.setShopId(1L);
         mock.setPrice(new BigDecimal(20));
-
         try {
             CommodityData insertData = commodityService.insertCommodity(mock);
             Optional<CommodityData> res = commodityService.selectByKeyAndVersion(
                     insertData.getId(), insertData.getVersion());
-
             Assert.assertTrue(res.isPresent());
             CommodityData snapshot = res.get();
             System.out.println("insert data: " + insertData);
@@ -62,9 +54,8 @@ public class MapperTest {
 
     @Test
     public void updateTest() {
-        List<CommodityData> resList = commodityService.batchSelectByKey(Lists.newArrayList(4));
+        List<CommodityData> resList = commodityService.batchSelectByKey(Lists.newArrayList(1L));
         Assert.assertEquals(resList.size(), 1);
-
         CommodityData res = resList.get(0);
         Long oldVersion = res.getVersion();
         res.setPrice(BigDecimal.valueOf(Math.round(Math.abs(Math.random()) % 1000), 2));
