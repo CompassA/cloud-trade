@@ -12,8 +12,9 @@
     <artifactId>trade-user</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>tarde-user-api</module>
+        <module>trade-user-api</module>
         <module>trade-user-service</module>
+        <module>trade-user-db</module>
     </modules>
 
     <properties>

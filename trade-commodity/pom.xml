@@ -14,5 +14,6 @@
     <modules>
         <module>commodity-service</module>
         <module>commodity-api</module>
+        <module>commodity-db</module>
     </modules>
 </project>

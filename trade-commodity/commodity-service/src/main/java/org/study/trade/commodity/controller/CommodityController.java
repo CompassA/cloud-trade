@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.study.trade.commodity.mapper.data.CommodityData;
 import org.study.trade.commodity.mapper.CommodityDataMapper;
+import org.study.trade.commodity.mapper.data.CommodityData;
 
 /**
  * @author Tomato

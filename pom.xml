@@ -7,7 +7,7 @@
     <groupId>org.study.trade</groupId>
     <artifactId>cloud-trade</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${cloudtrade.version}</version>
     <modules>
         <module>trade-order</module>
         <module>trade-commodity</module>
@@ -17,6 +17,7 @@
         <module>mq-common</module>
         <module>trade-user</module>
         <module>trade-commodity/commodity-db</module>
+        <module>trade-user/trade-user-db</module>
     </modules>
 
     <name>cloud-trade</name>
@@ -27,6 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.11</maven.compiler.source>
         <maven.compiler.target>1.11</maven.compiler.target>
+        <cloudtrade.version>1.0-SNAPSHOT</cloudtrade.version>
     </properties>
 
     <dependencyManagement>
