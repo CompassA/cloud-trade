@@ -1,3 +1,4 @@
+-- commodity model
 CREATE TABLE IF NOT EXISTS `commodity` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `shop_id` BIGINT NOT NULL,
@@ -21,6 +22,8 @@ CREATE TABLE IF NOT EXISTS `commodity_snapshot` (
     PRIMARY KEY(`id`, `version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+-- user model
 CREATE TABLE IF NOT EXISTS `user` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `nick` VARCHAR(32) NOT NULL,

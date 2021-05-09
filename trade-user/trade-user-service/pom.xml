@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.study.trade</groupId>
             <artifactId>trade-user-db</artifactId>
-            <version>${cloudtrade.version}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
