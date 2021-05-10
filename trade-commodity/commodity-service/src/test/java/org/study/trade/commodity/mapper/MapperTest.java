@@ -47,8 +47,8 @@ public class MapperTest {
             Assert.assertEquals(snapshot.getId(), insertData.getId());
             Assert.assertEquals(snapshot.getVersion(), insertData.getVersion());
         } catch (Exception e) {
-            Assert.fail();
             e.printStackTrace();
+            Assert.fail();
         }
     }
 
