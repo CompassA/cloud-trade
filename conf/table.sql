@@ -1,4 +1,81 @@
--- commodity model
+-------------------------------------------------
+-- order model --
+CREATE TABLE IF NOT EXISTS `order_master` (
+    `order_id` BIGINT NOT NULL,
+    `user_id` BIGINT NOT NULL,
+    `shop_id` BIGINT NOT NULL,
+    `telephone` BIGINT NOT NULL,
+    `amount` DECIMAL(14, 2) NOT NULL,
+    `order_status` TINYINT NOT NULL DEFAULT 0,
+    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(`order_id`),
+    INDEX `idx_user_id`(`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- sharding --
+CREATE TABLE IF NOT EXISTS `order_master_0000` (
+    `order_id` BIGINT NOT NULL,
+    `user_id` BIGINT NOT NULL,
+    `shop_id` BIGINT NOT NULL,
+    `telephone` BIGINT NOT NULL,
+    `amount` DECIMAL(14, 2) NOT NULL,
+    `order_status` TINYINT NOT NULL DEFAULT 0,
+    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(`order_id`),
+    INDEX `idx_user_id`(`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `order_master_0001` (
+    `order_id` BIGINT NOT NULL,
+    `user_id` BIGINT NOT NULL,
+    `shop_id` BIGINT NOT NULL,
+    `telephone` BIGINT NOT NULL,
+    `amount` DECIMAL(14, 2) NOT NULL,
+    `order_status` TINYINT NOT NULL DEFAULT 0,
+    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(`order_id`),
+    INDEX `idx_user_id`(`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `order_master_0002` (
+    `order_id` BIGINT NOT NULL,
+    `user_id` BIGINT NOT NULL,
+    `shop_id` BIGINT NOT NULL,
+    `telephone` BIGINT NOT NULL,
+    `amount` DECIMAL(14, 2) NOT NULL,
+    `order_status` TINYINT NOT NULL DEFAULT 0,
+    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(`order_id`),
+    INDEX `idx_user_id`(`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `order_master_0003` (
+    `order_id` BIGINT NOT NULL,
+    `user_id` BIGINT NOT NULL,
+    `shop_id` BIGINT NOT NULL,
+    `telephone` BIGINT NOT NULL,
+    `amount` DECIMAL(14, 2) NOT NULL,
+    `order_status` TINYINT NOT NULL DEFAULT 0,
+    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(`order_id`),
+    INDEX `idx_user_id`(`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `order_commodity` (
+    `commodity_id` BIGINT NOT NULL,
+    `order_id` BIGINT NOT NULL,
+    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-------------------------------------------------
+-- commodity model --
 CREATE TABLE IF NOT EXISTS `commodity` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `shop_id` BIGINT NOT NULL,
@@ -23,7 +100,8 @@ CREATE TABLE IF NOT EXISTS `commodity_snapshot` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- user model
+-------------------------------------------------
+-- user model --
 CREATE TABLE IF NOT EXISTS `user` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `nick` VARCHAR(32) NOT NULL,
