@@ -8,6 +8,26 @@ spring:
     password: "root"
     driver-class-name: "org.mariadb.jdbc.Driver"
     type: "com.alibaba.druid.pool.DruidDataSource"
+  application:
+    name: logger-center-service
+
+service-list:
+  echo-service-version: dev
+
+embedded:
+  zookeeper:
+    port: 2181
+
+dubbo:
+  service:
+    version: dev
+  config-center:
+    timeout: 10000
+  registry:
+    address: zookeeper://127.0.0.1:${embedded.zookeeper.port}
+    file: ${user.home}/dubbo-cache/${spring.application.name}/dubbo.cache
+    protocol: zookeeper
+    check: false
 
 mybatis:
   mapper-locations: "classpath:mapper/*.xml"

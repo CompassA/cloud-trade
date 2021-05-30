@@ -8,22 +8,20 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>trade-user</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>trade-user-api</module>
-        <module>trade-user-service</module>
-        <module>trade-user-db</module>
-    </modules>
+    <artifactId>logger-center</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <dubbo.version>2.7.6</dubbo.version>
-        <trade-user.version>1.0-SNAPSHOT</trade-user.version>
         <logger-center.version>1.0-SNAPSHOT</logger-center.version>
     </properties>
+
+    <modules>
+        <module>logger-center-api</module>
+        <module>logger-center-service</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -44,12 +42,6 @@
                         <artifactId>slf4j-log4j12</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>org.study.trade</groupId>
-                <artifactId>trade-user-db</artifactId>
-                <version>${trade-user.version}</version>
             </dependency>
 
             <dependency>

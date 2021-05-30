@@ -1,0 +1,19 @@
+tomato:
+  service:
+    version: dev
+
+server:
+  port: 6534
+
+spring:
+  application:
+    name: logger-center-service
+
+embedded:
+  zookeeper:
+    port: 2181
+
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:${embedded.zookeeper.port}
+    file: ${user.home}/dubbo-cache/${spring.application.name}/dubbo.cache

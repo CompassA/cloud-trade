@@ -16,6 +16,7 @@
         <module>trade-balance</module>
         <module>mq-common</module>
         <module>trade-user</module>
+        <module>logger-center</module>
     </modules>
 
     <name>cloud-trade</name>
