@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Tomato
  * Created on 2021.05.30
  */
-@EnableDubbo
+//@EnableDubbo
 @SpringBootApplication
 public class LoggerCenterApplication {
 
