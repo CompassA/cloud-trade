@@ -36,7 +36,7 @@ public class SequenceMeta {
         try {
             autoSequenceField.set(object, sequenceGenerator.nextValue());
             return true;
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | SequenceException e) {
             e.printStackTrace();
             return false;
         }

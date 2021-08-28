@@ -12,7 +12,7 @@
 
         <!--数据库链接地址账号密码-->
         <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
-                        connectionURL="jdbc:mariadb://127.0.0.1:3306/trade"
+                        connectionURL="jdbc:mariadb://127.0.0.1:3306/sequence_db"
                         userId="root"
                         password="root">
         </jdbcConnection>
@@ -46,8 +46,8 @@
         </javaClientGenerator>
 
         <!--生成对应表及类名-->
-        <table tableName="commodity"
-               domainObjectName="CommodityData"
+        <table tableName="sequence"
+               domainObjectName="SequencePO"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

@@ -3,27 +3,30 @@ server:
 spring:
   shardingsphere:
     datasource:
-      names: "master,slave0"
+      names: "master, sequence"
       master:
         driver-class-name: "org.mariadb.jdbc.Driver"
         username: "root"
         password: "root"
         type: "com.alibaba.druid.pool.DruidDataSource"
-        url: "jdbc:mariadb://192.168.3.132:3306/trade?characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8"
-      slave0:
+        url: "jdbc:mariadb://127.0.0.1:3306/trade?characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8"
+      sequence:
         driver-class-name: "org.mariadb.jdbc.Driver"
         username: "root"
         password: "root"
         type: "com.alibaba.druid.pool.DruidDataSource"
-        url: "jdbc:mariadb://192.168.3.133:3306/trade?characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8"
-    masterslave:
-      load-balance-algorithm-type: "round_robin"
-      master-data-source-name: "master"
-      name: "ms"
-      slave-data-source-names: "slave0"
+        url: "jdbc:mariadb://127.0.0.1:3306/sequence_db?characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8"
+#      slave0:
+#        driver-class-name: "org.mariadb.jdbc.Driver"
+#        username: "root"
+#        password: "root"
+#        type: "com.alibaba.druid.pool.DruidDataSource"
+#        url: "jdbc:mariadb://192.168.3.133:3306/trade?characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8"
+#    masterslave:
+#      load-balance-algorithm-type: "round_robin"
+#      master-data-source-name: "master"
+#      name: "ms"
+#      slave-data-source-names: "slave0"
     props:
       sql:
         show: true
-
-mybatis:
-  mapper-locations: "classpath:mapper/*.xml"

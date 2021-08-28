@@ -16,6 +16,7 @@ public interface SequenceGenerator {
     /**
      * 生成唯一id
      * @return id
+     * @throws SequenceException 序号生成异常
      */
-    long nextValue();
+    long nextValue() throws SequenceException;
 }

@@ -1,4 +1,4 @@
--------------------------------------------------
+-- -------------------------------------------------
 -- order model --
 CREATE TABLE IF NOT EXISTS `order_master` (
     `order_id` BIGINT NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `order_commodity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--------------------------------------------------
+-- -----------------------------------------------
 -- commodity model --
 CREATE TABLE IF NOT EXISTS `commodity` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `commodity_snapshot` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--------------------------------------------------
+-- -----------------------------------------------
 -- user model --
 CREATE TABLE IF NOT EXISTS `user` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
