@@ -30,6 +30,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <powermock.version>2.0.2</powermock.version>
+        <h2.version>1.4.200</h2.version>
     </properties>
 
     <dependencyManagement>
@@ -116,6 +117,14 @@
                 <version>${powermock.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

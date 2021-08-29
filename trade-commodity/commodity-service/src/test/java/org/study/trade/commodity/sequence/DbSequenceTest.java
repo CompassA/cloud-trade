@@ -1,19 +1,25 @@
 package org.study.trade.commodity.sequence;
 
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.study.trade.common.sequence.SequenceException;
 import org.study.trade.common.sequence.SequenceGenerator;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -25,11 +31,37 @@ import java.util.concurrent.CountDownLatch;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
+@ActiveProfiles(value="test")
 public class DbSequenceTest {
 
     @Autowired
     @Qualifier("dbSequenceGenerator")
     private SequenceGenerator sequenceGenerator;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @PostConstruct
+    public void init() throws SQLException {
+        DataSource sequence = ((ShardingDataSource) dataSource).getDataSourceMap().get("sequence");
+        Connection connection = sequence.getConnection();
+        PreparedStatement createStatement = connection.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS sequence (" +
+                        "        id INT NOT NULL," +
+                        "        name VARCHAR(64) NOT NULL," +
+                        "        value BIGINT NOT NULL DEFAULT 0," +
+                        "        step BIGINT NOT NULL DEFAULT 100," +
+                        "        create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
+                        "        update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
+                        "        PRIMARY KEY(id)" +
+                        "    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+        );
+        createStatement.execute();
+        PreparedStatement insertStatement = connection.prepareStatement(
+                "INSERT INTO sequence(id, name, step, value) VALUES (1, 'commodity_sequence', 2000, 0);"
+        );
+        insertStatement.execute();
+    }
 
     /**
      * 并发生成号段测试

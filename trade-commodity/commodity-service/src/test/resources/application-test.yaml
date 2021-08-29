@@ -1,0 +1,18 @@
+server:
+  port: 8000
+spring:
+  shardingsphere:
+    datasource:
+      names: "master, sequence"
+      master:
+        driver-class-name: "org.h2.Driver"
+        type: "com.alibaba.druid.pool.DruidDataSource"
+        url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=MySQL"
+      sequence:
+        driver-class-name: "org.h2.Driver"
+        type: "com.alibaba.druid.pool.DruidDataSource"
+        url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=MySQL"
+    props:
+      sql:
+        show: true
+
