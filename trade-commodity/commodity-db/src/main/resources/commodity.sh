@@ -20,11 +20,11 @@ mysql -uroot -proot -e "
 
 # 创建2个商品库 各8张表
 for i in {0..1}; do
-    data_base_name="product_db_$(printf '%02d' $((i)))"
+    data_base_name="product_db_$i"
     mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS $data_base_name; "
     for j in {0..7}; do
-        commodity_table_name="commodity_$(printf '%04d' $((j)))"
-        commodity_snapshot_name="commodity_snapshot_$(printf '%04d' $((j)))"
+        commodity_table_name="commodity_$j"
+        commodity_snapshot_name="commodity_snapshot_$j"
         mysql -uroot -proot -e "
             USE $data_base_name;
             CREATE TABLE IF NOT EXISTS $commodity_table_name (

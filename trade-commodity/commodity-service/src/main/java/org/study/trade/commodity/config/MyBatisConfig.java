@@ -1,6 +1,7 @@
 package org.study.trade.commodity.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -26,12 +27,12 @@ import javax.sql.DataSource;
         sqlSessionTemplateRef = "tradeSqlSessionTemplate")
 public class MyBatisConfig {
 
-    private final DataSource shardingDataSource;
+    private final ShardingDataSource shardingDataSource;
 
     private final String tradeMapperLocation;
 
     public MyBatisConfig(DataSource shardingDataSource) {
-        this.shardingDataSource = shardingDataSource;
+        this.shardingDataSource = (ShardingDataSource) shardingDataSource;
         this.tradeMapperLocation = "classpath:mapper/*.xml";
     }
 
