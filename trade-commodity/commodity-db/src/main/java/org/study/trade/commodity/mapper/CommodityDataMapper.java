@@ -6,7 +6,9 @@ import org.study.trade.commodity.mapper.data.CommodityData;
 import java.util.List;
 
 public interface CommodityDataMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByKeyAndShopId(@Param("id") Long id, @Param("shopId") Long shopId);
+
+    int deleteSnapshotByPrimaryKey(@Param("id") Long id, @Param("version") Long version);
 
     int insertSnapshot(CommodityData record);
 

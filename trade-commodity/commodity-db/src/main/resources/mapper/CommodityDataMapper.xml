@@ -40,9 +40,14 @@
     WHERE `id` = #{id} AND `version` = #{version}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByKeyAndShopId">
     delete from commodity
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} AND shop_id = #{shopId}
+  </delete>
+
+  <delete id="deleteSnapshotByPrimaryKey">
+    delete from commodity_snapshot
+    where id = #{id,jdbcType=INTEGER} AND version = #{version}
   </delete>
 
   <insert id="insertSnapshot" parameterType="org.study.trade.commodity.mapper.data.CommodityData">
