@@ -12,12 +12,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.study.trade.commodity.mapper.CommodityDataMapper;
 import org.study.trade.commodity.mapper.data.CommodityData;
+import org.study.trade.commodity.test.MockUtil;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
@@ -57,43 +57,7 @@ public class MapperConfigTest {
         mockData.setName("mock name");
         mockData.setPrice(BigDecimal.valueOf(20.0d));
 
-        ShardingDataSource shardingDataSource = (ShardingDataSource) dataSource;
-        for (int i = 0; i < 2; ++i) {
-            DataSource dataSource = shardingDataSource.getDataSourceMap()
-                    .get(String.format("product-db-%d", i));
-            Connection connection = dataSource.getConnection();
-            for (int j = 0; j < 8; ++j) {
-                String commodityTableName = "commodity_" + j;
-                String commoditySnapShotTableName = "commodity_snapshot_" + j;
-                PreparedStatement createCommodityTable = connection.prepareStatement(
-                        "CREATE TABLE IF NOT EXISTS " + commodityTableName + "(" +
-                                "id BIGINT NOT NULL," +
-                                "shop_id BIGINT NOT NULL," +
-                                "name VARCHAR(128) NOT NULL," +
-                                "price DECIMAL(14,2) NOT NULL," +
-                                "version BIGINT NOT NULL," +
-                                "create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-                                "update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
-                                "PRIMARY KEY(id)," +
-                                "INDEX idx_shop_id_" + j + "(shop_id)" +
-                                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
-                );
-
-                PreparedStatement createSnapshotTable = connection.prepareStatement(
-                        "CREATE TABLE IF NOT EXISTS " + commoditySnapShotTableName +"(\n" +
-                        "                id BIGINT NOT NULL,\n" +
-                        "                version BIGINT NOT NULL,\n" +
-                        "                shop_id BIGINT NOT NULL,\n" +
-                        "                name VARCHAR(128) NOT NULL,\n" +
-                        "                price DECIMAL(14,2) NOT NULL,\n" +
-                        "                create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n" +
-                        "                update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n" +
-                        "                PRIMARY KEY(id, version)\n" +
-                        "            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
-                createCommodityTable.execute();
-                createSnapshotTable.execute();
-            }
-        }
+        MockUtil.mockDataBase((ShardingDataSource) dataSource);
     }
 
     /** 测试路由插入的正确性 */

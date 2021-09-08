@@ -14,7 +14,7 @@ public interface CommodityDataMapper {
 
     int insertSelective(CommodityData record);
 
-    CommodityData selectByPrimaryKey(Long id);
+    CommodityData selectByIdAndShopId(@Param("id") Long id, @Param("shopId") Long shopId);
 
     CommodityData selectByIdAndVersion(@Param("id") Long id, @Param("version") Long version);
 

@@ -16,11 +16,11 @@
     id, shop_id, name, price, version, create_time, update_time
   </sql>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByIdAndShopId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from commodity
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} AND shop_id = #{shopId}
   </select>
 
   <select id="batchByPrimaryKey" resultMap="BaseResultMap">
@@ -116,9 +116,6 @@
       <if test="version != null">
         version = #{version,jdbcType=BIGINT} + 1,
       </if>
-      <if test="shopId != null">
-        shop_id = #{shopId,jdbcType=BIGINT},
-      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -126,7 +123,7 @@
         price = #{price,jdbcType=DECIMAL},
       </if>
     </set>
-    WHERE id = #{id,jdbcType=BIGINT} AND version = #{version}
+    WHERE id = #{id,jdbcType=BIGINT} AND version = #{version} AND shop_id = #{shopId}
   </update>
 
   <update id="updateByPrimaryKey" parameterType="org.study.trade.commodity.mapper.data.CommodityData">

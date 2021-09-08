@@ -10,13 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.study.trade.commodity.test.MockUtil;
 import org.study.trade.common.sequence.SequenceException;
 import org.study.trade.common.sequence.SequenceGenerator;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,24 +42,7 @@ public class DbSequenceTest {
 
     @PostConstruct
     public void init() throws SQLException {
-        DataSource sequence = ((ShardingDataSource) dataSource).getDataSourceMap().get("sequence");
-        Connection connection = sequence.getConnection();
-        PreparedStatement createStatement = connection.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS sequence (" +
-                        "        id INT NOT NULL," +
-                        "        name VARCHAR(64) NOT NULL," +
-                        "        value BIGINT NOT NULL DEFAULT 0," +
-                        "        step BIGINT NOT NULL DEFAULT 100," +
-                        "        create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-                        "        update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
-                        "        PRIMARY KEY(id)" +
-                        "    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
-        );
-        createStatement.execute();
-        PreparedStatement insertStatement = connection.prepareStatement(
-                "INSERT INTO sequence(id, name, step, value) VALUES (1, 'commodity_sequence', 2000, 0);"
-        );
-        insertStatement.execute();
+        MockUtil.mockDataBase((ShardingDataSource) dataSource);
     }
 
     /**
