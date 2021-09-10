@@ -1,11 +1,12 @@
 package org.study.trade.user.controller;
 
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.study.trade.common.error.BusinessException;
+import org.study.trade.common.response.CommonResponse;
+import org.study.trade.user.ErrorEnum;
+import org.study.trade.user.constants.ApiPath;
 import org.study.trade.user.model.UserDTO;
 
 /**
@@ -15,17 +16,13 @@ import org.study.trade.user.model.UserDTO;
 @RestController
 public class UserController {
 
-    @PostMapping("/trade/api/user/register")
-    public UserDTO register(
-            @Validated({UserDTO.Register.class}) @RequestBody UserDTO userDTO,
-            BindingResult result) {
-        if (result.hasErrors()) {
-            StringBuilder builder = new StringBuilder();
-            for (FieldError fieldError : result.getFieldErrors()) {
-                builder.append(fieldError.getDefaultMessage()).append("   ");
-            }
-            return new UserDTO().setNick(builder.toString());
+    @PostMapping(ApiPath.REGISTER)
+    public CommonResponse<UserDTO> register(@RequestBody UserDTO userDTO) throws BusinessException {
+        StringBuilder infoBuilder = new StringBuilder(0);
+        if (!UserDTO.isValid(userDTO, infoBuilder)) {
+            throw new BusinessException(
+                    ErrorEnum.REGISTER_REQUEST_BODY_ERROR.create(infoBuilder.toString()));
         }
-        return userDTO;
+        return CommonResponse.success(userDTO);
     }
 }

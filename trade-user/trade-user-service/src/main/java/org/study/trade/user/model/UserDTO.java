@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang.StringUtils;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -23,30 +22,32 @@ public class UserDTO {
 
     private Long id;
 
-    @NotBlank(
-            message = "nick name can't be blank",
-            groups = {Register.class})
     private String nick;
 
-    @NotNull(
-            message = "gender can't be null",
-            groups = {Register.class})
     private Byte gender;
 
     private Integer telephone;
 
-    @NotBlank(
-            message = "password can't be null",
-            groups = {Register.class, Login.class})
     private String password;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public interface Register {
-    }
-
-    public interface Login {
+    public static boolean isValid(UserDTO userDTO, StringBuilder stringBuilder) {
+        boolean result = true;
+        if (StringUtils.isBlank(userDTO.nick)) {
+            stringBuilder.append("nick name can't be blank;");
+            result = false;
+        }
+        if (userDTO.gender == null) {
+            stringBuilder.append("gender can't be null;");
+            result = false;
+        }
+        if (userDTO.password == null) {
+            stringBuilder.append("password can't be null;");
+            result = false;
+        }
+        return result;
     }
 }
