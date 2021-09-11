@@ -101,15 +101,3 @@ CREATE TABLE IF NOT EXISTS `commodity_snapshot` (
 
 
 -- -----------------------------------------------
--- user model --
-CREATE TABLE IF NOT EXISTS `user` (
-    `id` BIGINT NOT NULL AUTO_INCREMENT,
-    `nick` VARCHAR(32) NOT NULL,
-    `gender` TINYINT NOT NULL DEFAULT 0,
-    `telephone` INT,
-    `password` VARCHAR(64) NOT NULL,
-    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY(`id`),
-    UNIQUE KEY `uni_idx_telephone`(`telephone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

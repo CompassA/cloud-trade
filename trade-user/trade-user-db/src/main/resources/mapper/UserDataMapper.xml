@@ -5,7 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="nick" jdbcType="VARCHAR" property="nick" />
     <result column="gender" jdbcType="TINYINT" property="gender" />
-    <result column="telephone" jdbcType="INTEGER" property="telephone" />
+    <result column="telephone" jdbcType="BIGINT" property="telephone" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -67,7 +67,7 @@
         #{gender,jdbcType=TINYINT},
       </if>
       <if test="telephone != null">
-        #{telephone,jdbcType=INTEGER},
+        #{telephone,jdbcType=BIGINT},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -108,7 +108,7 @@
     update user
     set nick = #{nick,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=TINYINT},
-      telephone = #{telephone,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=BIGINT},
       password = #{password,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

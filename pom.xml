@@ -30,6 +30,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <powermock.version>2.0.2</powermock.version>
         <h2.version>1.4.200</h2.version>
+        <jwt.version>0.9.1</jwt.version>
     </properties>
 
     <dependencyManagement>
@@ -122,6 +123,12 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
 
         </dependencies>

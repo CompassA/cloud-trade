@@ -26,7 +26,7 @@ public class UserDTO {
 
     private Byte gender;
 
-    private Integer telephone;
+    private Long telephone;
 
     private String password;
 

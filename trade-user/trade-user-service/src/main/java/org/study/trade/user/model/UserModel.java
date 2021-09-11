@@ -1,15 +1,18 @@
-package org.study.trade.user.mapper.data;
+package org.study.trade.user.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.Date;
 
+/**
+ * @author Tomato
+ * Created on 2021.09.11
+ */
 @Getter
 @Setter
-@Accessors(chain = true)
-public class UserData {
+public class UserModel {
+
     private Long id;
 
     private String nick;
@@ -23,4 +26,5 @@ public class UserData {
     private Date createTime;
 
     private Date updateTime;
+
 }
