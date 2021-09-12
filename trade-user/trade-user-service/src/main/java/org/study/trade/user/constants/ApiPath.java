@@ -6,7 +6,10 @@ package org.study.trade.user.constants;
  */
 public final class ApiPath {
 
-    public static final String REGISTER = "/trade/api/user/register";
+    public static final String USER_REGISTER = "/trade/api/user/register";
+    public static final String USER_LOGIN = "/trade/api/user/login";
+
+    public static final String SELLER_CREATE = "";
 
 
     private ApiPath() {

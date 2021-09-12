@@ -21,11 +21,22 @@ public enum ErrorEnum {
      * 参数错误
      */
     PARAMETER_ERROR(10003, "request parameter error"),
-
+    /**
+     * 认证错误
+     */
+    AUTHENTICATION_EXCEPTION(10004, "authentication failed"),
     /**
      * 注册请求错误
      */
-    REGISTER_REQUEST_BODY_ERROR(20001, "invalid register request body");
+    REGISTER_REQUEST_BODY_ERROR(20001, "invalid register request body"),
+    /**
+     * 重复注册
+     */
+    REGISTER_INSERT_DUPLICATE_ERROR(20002, "duplicate error"),
+    /**
+     * 数据库异常
+     */
+    REGISTER_INSERT_ERROR(20003, "database error"),
     ;
 
     private final int code;

@@ -3,6 +3,7 @@ package org.study.trade.user.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.study.trade.user.model.UserDTO;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +24,7 @@ import java.util.Map;
 @Service
 public class JwtService implements EnvironmentAware {
 
-    private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    private static final Duration VALID_DURATION = Duration.ofDays(2);
     private static final String CLAIM_USER_ID = "user_id";
     private static final String CLAIM_USER_NICK_NAME = "user_nick_name";
     private static final String CLAIM_USER_GENDER = "user_gender";
@@ -30,20 +32,25 @@ public class JwtService implements EnvironmentAware {
 
     private SecretKey secretKey;
 
-    public String generateToken(UserDTO userModel) {
+    public String generateToken(UserDTO userDTO) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_USER_ID, userModel.getId());
-        claims.put(CLAIM_USER_NICK_NAME, userModel.getNick());
-        claims.put(CLAIM_USER_GENDER, userModel.getGender());
-        claims.put(CLAIM_USER_TELEPHONE, userModel.getTelephone());
+        claims.put(CLAIM_USER_ID, userDTO.getId());
+        claims.put(CLAIM_USER_NICK_NAME, userDTO.getNick());
+        claims.put(CLAIM_USER_GENDER, userDTO.getGender());
+        claims.put(CLAIM_USER_TELEPHONE, userDTO.getTelephone());
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userModel.getId().toString())
+                .setSubject(userDTO.getId().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + VALID_DURATION.toMillis()))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
+    }
+
+    public boolean isExpired(Claims jwt) {
+        return new Date(System.currentTimeMillis())
+                .after(jwt.getExpiration());
     }
 
     public Claims parseJWT(String jwt) {
@@ -55,6 +62,9 @@ public class JwtService implements EnvironmentAware {
 
     public UserDTO getUserInfo(String jwt) {
         Claims claims = parseJWT(jwt);
+        if (isExpired(claims)) {
+            return null;
+        }
         UserDTO userDTO = new UserDTO();
         userDTO.setId(claims.get(CLAIM_USER_ID, Long.class));
         userDTO.setNick(claims.get(CLAIM_USER_NICK_NAME, String.class));
@@ -66,8 +76,11 @@ public class JwtService implements EnvironmentAware {
 
     @Override
     public void setEnvironment(Environment environment) {
-        byte[] secret = environment.getProperty("jwt.secret")
-                .getBytes(StandardCharsets.UTF_8);
+        String property = environment.getProperty("jwt.secret");
+        if (StringUtils.isBlank(property)) {
+            throw new IllegalArgumentException("no jwt secret");
+        }
+        byte[] secret = property.getBytes(StandardCharsets.UTF_8);
         this.secretKey = new SecretKeySpec(secret, 0, secret.length, "AES");
     }
 }

@@ -53,8 +53,8 @@
 
 
         <!--生成对应表及类名-->
-        <table tableName="user"
-               domainObjectName="UserData"
+        <table tableName="seller"
+               domainObjectName="SellerPO"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

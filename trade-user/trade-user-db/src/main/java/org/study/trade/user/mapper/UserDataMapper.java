@@ -14,4 +14,6 @@ public interface UserDataMapper {
     int updateByPrimaryKeySelective(UserData record);
 
     int updateByPrimaryKey(UserData record);
+
+    UserData selectByNickName(String nickName);
 }
