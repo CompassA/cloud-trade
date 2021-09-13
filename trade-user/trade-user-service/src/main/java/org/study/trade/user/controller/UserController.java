@@ -1,6 +1,7 @@
 package org.study.trade.user.controller;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,8 +15,10 @@ import org.study.trade.user.ErrorEnum;
 import org.study.trade.user.constants.ApiPath;
 import org.study.trade.user.model.UserDTO;
 import org.study.trade.user.model.UserModel;
-import org.study.trade.user.service.JwtService;
 import org.study.trade.user.service.UserService;
+
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Tomato
@@ -26,14 +29,14 @@ public class UserController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public UserController(UserService userService,
                           AuthenticationManager authenticationManager,
-                          JwtService jwtService) {
+                          RedisTemplate<String, Object> redisTemplate) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
+        this.redisTemplate = redisTemplate;
     }
 
     @PostMapping(ApiPath.USER_REGISTER)
@@ -63,11 +66,13 @@ public class UserController {
                         userDTO.getPassword()
                 )
         );
-        UserModel userModel = (UserModel) authentication.getPrincipal();
-        UserDTO userResponseDTO = new UserDTO();
-        BeanUtils.copyProperties(userModel, userResponseDTO);
-        String jwt = jwtService.generateToken(userResponseDTO);
-        return CommonResponse.success(jwt);
+        UserDTO responseDTO = new UserDTO();
+        BeanUtils.copyProperties(authentication.getPrincipal(), responseDTO);
+        responseDTO.setPassword(null);
+        String token = UUID.randomUUID().toString();
+        redisTemplate.opsForValue().set(token, responseDTO);
+        redisTemplate.expire(token, 1, TimeUnit.DAYS);
+        return CommonResponse.success(token);
     }
 
     @GetMapping("/test")

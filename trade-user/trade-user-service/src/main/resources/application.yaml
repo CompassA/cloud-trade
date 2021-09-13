@@ -1,5 +1,8 @@
 server:
   port: 6060
+  servlet:
+    session:
+      timeout: 60
 
 spring:
   datasource:
@@ -14,7 +17,18 @@ spring:
     add-mappings: false
   mvc:
     throw-exception-if-no-handler-found: true
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    timeout: 50000
+    jedis:
+      pool:
+        max-idle: 50
+        min-idle: 20
 
+logging:
+  config: "classpath:logback.xml"
 
 mybatis:
   mapper-locations: "classpath:mapper/*.xml"
